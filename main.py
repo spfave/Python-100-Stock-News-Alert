@@ -1,16 +1,17 @@
 import os
 import requests
+import datetime
 from dotenv import load_dotenv
+from requests.api import get
 load_dotenv()
 
-STOCK = ["TSLA", "MSFT"]
-COMPANY_NAME = ["Tesla Inc", "Microsoft Corp"]
+STOCKS = ["TSLA", "MSFT"]
+COMPANY_NAMES = ["Tesla Inc", "Microsoft Corp"]
 
 # STEP 1: Use https://www.alphavantage.co
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 
 
-# todo: function to get individual stock price at close for specified date
 def get_stock_daily_data(stock_symbol):
     """ Retrieve daily stock data using Alpha Vantage api """
 
@@ -25,7 +26,15 @@ def get_stock_daily_data(stock_symbol):
     response.raise_for_status()
 
     stock_data = response.json()
-    print(stock_data)
+    return stock_data
+
+
+# def get_slice_stock_daily_data(stock_symbol, date_start, day_back_end):
+#     """  """
+#     stock_data = get_stock_daily_data(stock_symbol)
+#     # stock_data["Time Series (Daily)"]
+
+#     pass
 
 
 # todo: function to determine percent change in stock price at close over preceding two days
@@ -39,9 +48,12 @@ def get_stock_daily_data(stock_symbol):
 # Send a separate message with the percentage change and each article's title and description to your phone number.
 # todo: function to send message with stock percent change and news article title & description
 
-# STEP4:
-# todo: function to complete steps 1-3 for all stocks in STOCK list
-
 
 # Main
-get_stock_daily_data("MSFT")
+# todo: function/script to complete steps 1-3 for all stocks in STOCK list
+date = datetime.date.today()
+date_back_start = date-datetime.timedelta(days=1)
+date_back_end = date-datetime.timedelta(days=2)
+
+print()
+# get_stock_daily_data("MSFT")
