@@ -11,6 +11,23 @@ COMPANY_NAME = ["Tesla Inc", "Microsoft Corp"]
 
 
 # todo: function to get individual stock price at close for specified date
+def get_stock_daily_data(stock_symbol):
+    """ Retrieve daily stock data using Alpha Vantage api """
+
+    url_stocks = "https://www.alphavantage.co/query"
+    parameters = {
+        "function": "TIME_SERIES_DAILY",
+        "symbol": stock_symbol,
+        "apikey": os.getenv("API_KEY_STOCKS"),
+    }  # default outputsize: compact, datatype: json
+
+    response = requests.get(url=url_stocks, params=parameters)
+    response.raise_for_status()
+
+    stock_data = response.json()
+    print(stock_data)
+
+
 # todo: function to determine percent change in stock price at close over preceding two days
 # todo: function to execute if stock percent change exceeds threshold
 
@@ -24,3 +41,7 @@ COMPANY_NAME = ["Tesla Inc", "Microsoft Corp"]
 
 # STEP4:
 # todo: function to complete steps 1-3 for all stocks in STOCK list
+
+
+# Main
+get_stock_daily_data("MSFT")
