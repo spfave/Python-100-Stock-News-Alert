@@ -1,8 +1,15 @@
-STOCK = "TSLA"
-COMPANY_NAME = "Tesla Inc"
+import os
+import requests
+from dotenv import load_dotenv
+load_dotenv()
+
+STOCK = ["TSLA", "MSFT"]
+COMPANY_NAME = ["Tesla Inc", "Microsoft Corp"]
 
 # STEP 1: Use https://www.alphavantage.co
 # When STOCK price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
+
+
 # todo: function to get individual stock price at close for specified date
 # todo: function to determine percent change in stock price at close over preceding two days
 # todo: function to execute if stock percent change exceeds threshold
