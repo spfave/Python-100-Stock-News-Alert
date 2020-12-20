@@ -2,7 +2,6 @@ import os
 import requests
 import datetime
 from dotenv import load_dotenv
-from requests.api import get
 load_dotenv()
 
 STOCKS = ["TSLA", "MSFT"]
@@ -29,12 +28,14 @@ def get_stock_daily_data(stock_symbol):
     return stock_data
 
 
-# def get_slice_stock_daily_data(stock_symbol, date_start, day_back_end):
-#     """  """
-#     stock_data = get_stock_daily_data(stock_symbol)
-#     # stock_data["Time Series (Daily)"]
+def get_slice_stock_daily_data(stock_symbol, dates: tuple):
+    """  """
 
-#     pass
+    stock_data = get_stock_daily_data(stock_symbol)
+    stock_data["Time Series (Daily)"] = {
+        date: stock_data["Time Series (Daily)"][date] for date in dates}
+
+    return stock_data
 
 
 # todo: function to determine percent change in stock price at close over preceding two days
@@ -48,12 +49,14 @@ def get_stock_daily_data(stock_symbol):
 # Send a separate message with the percentage change and each article's title and description to your phone number.
 # todo: function to send message with stock percent change and news article title & description
 
-
 # Main
 # todo: function/script to complete steps 1-3 for all stocks in STOCK list
 date = datetime.date.today()
-date_back_start = date-datetime.timedelta(days=1)
-date_back_end = date-datetime.timedelta(days=2)
+date_back_start = str(date-datetime.timedelta(days=1))
+date_back_end = str(date-datetime.timedelta(days=2))
 
-print()
-# get_stock_daily_data("MSFT")
+stock_data = get_slice_stock_daily_data(
+    "MSFT", (date_back_start, date_back_end))
+
+
+print(stock_data)
