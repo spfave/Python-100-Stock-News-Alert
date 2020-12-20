@@ -36,10 +36,15 @@ def stock_close_percent_change(stock) -> float:
 
 def stock_close_prices(stock, dates):
     """  """
-    pass
+
+    stock_data = stock_day_data(stock)
+    close_prices = [
+        stock_data["Time Series (Daily)"][date]["close"] for date in dates]
+
+    return close_prices
 
 
-def stock_daily_data(stock):
+def stock_day_data(stock):
     """ Retrieve daily stock data using Alpha Vantage api """
 
     url_stocks = "https://www.alphavantage.co/query"
