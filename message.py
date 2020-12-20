@@ -1,3 +1,8 @@
+# STEP 3: Use https://www.twilio.com
+# Send a separate message with the percentage change and each article's title and description to your phone number.
+# todo: function to send message with stock percent change and news article title & description
+
+
 # Optional: Format the SMS message like this:
 """
 TSLA: 🔺2%
