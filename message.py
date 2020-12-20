@@ -1,6 +1,16 @@
 # STEP 3: Use https://www.twilio.com
 # Send a separate message with the percentage change and each article's title and description to your phone number.
+
+# todo: function to execute if stock percent change exceeds threshold
+def message_user(parameter_list):
+    """  """
+    pass
+
+
 # todo: function to send message with stock percent change and news article title & description
+def generate_message(parameter_list):
+    """ """
+    pass
 
 
 # Optional: Format the SMS message like this:
