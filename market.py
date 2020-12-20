@@ -1,7 +1,7 @@
 import os
 import requests
-import datetime
-from pytz import timezone
+# import datetime
+# from pytz import timezone
 from dotenv import load_dotenv
 load_dotenv()
 # STEP 1: Use https://www.alphavantage.co
@@ -9,53 +9,54 @@ load_dotenv()
 
 
 # Functions
-def is_market_day(date) -> bool:
-    """  """
-    pass
+# def is_market_day(date) -> bool:
+#     """  """
+#     pass
 
 
-def previous_market_day(date):
-    """  """
-    new_date = date-datetime.timedelta(day=1)
-    if is_market_day(new_date):
-        return new_date
-    else:
-        previous_market_day(new_date)
+# def previous_market_day(date):
+#     """  """
+#     new_date = date-datetime.timedelta(day=1)
+#     if is_market_day(new_date):
+#         return new_date
+#     else:
+#         previous_market_day(new_date)
 
 
-def last_market_close_days():
-    """  """
-    eastern = timezone("US/Eastern")
-    # US market close time tz=US/Eastern
-    market_close = datetime.time(hour=16, tzinfo=eastern)
-    todaytime = datetime.datetime.now(tz=eastern)
+# def last_market_close_days():
+#     """  """
+#     eastern = timezone("US/Eastern")
+#     # US market close time tz=US/Eastern
+#     market_close = datetime.time(hour=16, tzinfo=eastern)
+#     todaytime = datetime.datetime.now(tz=eastern)
 
-    if is_market_day(todaytime.date()) and todaytime.time() > market_close:
-        close_day1 = todaytime.date()
-    else:
-        close_day1 = previous_market_day(todaytime.date())
-    close_day2 = previous_market_day(close_day1)
+#     if is_market_day(todaytime.date()) and todaytime.time() > market_close:
+#         close_day1 = todaytime.date()
+#     else:
+#         close_day1 = previous_market_day(todaytime.date())
+#     close_day2 = previous_market_day(close_day1)
 
-    return (close_day1, close_day2)
+#     return (close_day1, close_day2)
 
 
 # todo: function to determine percent change in stock price at close over preceding two days
 def stock_close_percent_change(stock) -> float:
     """ Calculates percent change of stock close price over last two market days """
 
-    close_days = last_market_close_days()
-    close_prices = stock_close_prices(stock, close_days)
+    # close_days = last_market_close_days()
+    close_prices = stock_close_prices(stock)
 
-    close_percent_change = round((close_prices[0]/close_prices[1]-1)*100, 1)
-    return close_percent_change
+    last_close_percent_change = round(
+        (close_prices[0]/close_prices[1]-1)*100, 1)
+    return last_close_percent_change
 
 
-def stock_close_prices(stock, dates):
+def stock_close_prices(stock):
     """  """
 
     stock_data = stock_day_data(stock)
-    close_prices = [
-        stock_data["Time Series (Daily)"][str(date)]["close"] for date in dates]
+    close_prices = [float(day_data["4. close"])
+                    for day_data in stock_data["Time Series (Daily)"].values()]
 
     return close_prices
 
@@ -85,3 +86,5 @@ def stock_day_data(stock):
 #         date: stock_data["Time Series (Daily)"][date] for date in dates}
 
 #     return stock_data
+
+print(stock_close_percent_change("TSLA"))
