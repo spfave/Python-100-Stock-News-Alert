@@ -1,6 +1,7 @@
 import os
-import datetime
 import requests
+import datetime
+from pytz import timezone
 from dotenv import load_dotenv
 load_dotenv()
 # STEP 1: Use https://www.alphavantage.co
@@ -18,9 +19,20 @@ def previous_market_day(date):
     pass
 
 
-def last_market_close_days(date):
+def last_market_close_days():
     """  """
-    pass
+    eastern = timezone("US/Eastern")
+    # US market close time tz=US/Eastern
+    market_close = datetime.time(hour=16, tzinfo=eastern)
+    todaytime = datetime.datetime.now(tz=eastern)
+
+    if is_market_day(todaytime.date()) and todaytime.time() > market_close:
+        close_day1 = todaytime.date()
+    else:
+        close_day1 = previous_market_day(todaytime.date())
+    close_day2 = previous_market_day(close_day1)
+
+    return (close_day1, close_day2)
 
 
 # todo: function to determine percent change in stock price at close over preceding two days
@@ -39,7 +51,7 @@ def stock_close_prices(stock, dates):
 
     stock_data = stock_day_data(stock)
     close_prices = [
-        stock_data["Time Series (Daily)"][date]["close"] for date in dates]
+        stock_data["Time Series (Daily)"][str(date)]["close"] for date in dates]
 
     return close_prices
 
