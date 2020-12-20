@@ -16,7 +16,11 @@ def is_market_day(date) -> bool:
 
 def previous_market_day(date):
     """  """
-    pass
+    new_date = date-datetime.timedelta(day=1)
+    if is_market_day(new_date):
+        return new_date
+    else:
+        previous_market_day(new_date)
 
 
 def last_market_close_days():
