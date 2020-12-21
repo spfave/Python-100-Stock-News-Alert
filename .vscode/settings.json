@@ -3,6 +3,7 @@
         "bluf",
         "dotenv",
         "getenv",
-        "pytz"
+        "pytz",
+        "twilio"
     ]
 }

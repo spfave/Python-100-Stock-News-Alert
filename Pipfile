@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 python-dotenv = "*"
+twilio = "*"
 
 [dev-packages]
 autopep8 = "*"
