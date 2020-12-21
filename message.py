@@ -10,12 +10,19 @@ def message_user(company, stock_delta):
     """  """
 
     news_stories = news.news_top_headlines(company)
+    for news_story in news_stories:
+        message = generate_stock_message(company, stock_delta, news_story)
+        print(message)
 
 
 # todo: function to send message with stock percent change and news article title & description
-def generate_message(parameter_list):
+def generate_stock_message(company, stock_delta, news_story):
     """ """
-    pass
+    bluf = f"{company}: 🔺{stock_delta}%" if stock_delta > 0 else f"{company}: 🔻{stock_delta}%"
+    headline = f"Headline: {news_story['title']}"
+    brief = f"Brief: {news_story['description']}"
+
+    return f"{bluf}\n{headline}\n{brief}"
 
 
 # Optional: Format the SMS message like this:
