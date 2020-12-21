@@ -1,10 +1,15 @@
+import news
+
 # STEP 3: Use https://www.twilio.com
 # Send a separate message with the percentage change and each article's title and description to your phone number.
 
+
+# Functions
 # todo: function to execute if stock percent change exceeds threshold
-def message_user(parameter_list):
+def message_user(company, stock_delta):
     """  """
-    pass
+
+    news_stories = news.news_top_headlines(company)
 
 
 # todo: function to send message with stock percent change and news article title & description

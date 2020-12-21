@@ -14,7 +14,8 @@ today = datetime.date.today()
 for stock in STOCKS:
     stock_close_delta = market.stock_close_percent_change(stock)
     if abs(stock_close_delta) >= STOCK_DELTA_THRESHOLD:
-        message.message_user(stock, stock_close_delta)
+        company = COMPANY_NAMES[STOCKS.index(stock)]
+        message.message_user(company, stock_close_delta)
 
 
 # date_back_start = str(today-datetime.timedelta(days=1))
