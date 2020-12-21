@@ -20,3 +20,8 @@ def news_top_headlines(company):
 
     news_stories = response.json()["articles"]
     return news_stories
+
+
+# Main
+if __name__ == "__main__":
+    print(news_top_headlines("TSLA"))
