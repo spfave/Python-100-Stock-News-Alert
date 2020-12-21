@@ -6,7 +6,7 @@ load_dotenv()
 
 # Functions
 def news_top_headlines(company):
-    """ Retrieve daily stock data using Alpha Vantage api """
+    """ Retrieve top headlines for company using News api """
 
     url_news = "https://newsapi.org/v2/everything"
     parameters = {
