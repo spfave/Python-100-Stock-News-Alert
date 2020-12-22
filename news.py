@@ -5,13 +5,13 @@ load_dotenv()
 
 
 # Functions
-def news_top_headlines(company):
+def news_top_headlines(company, num_stories):
     """ Retrieve top headlines for company using News api """
 
     url_news = "https://newsapi.org/v2/everything"
     parameters = {
         "qInTitle": company,
-        "pagesize": 3,
+        "pagesize": num_stories,
         "apikey": os.getenv("API_KEY_NEWS"),
     }
 

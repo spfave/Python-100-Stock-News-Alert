@@ -10,7 +10,7 @@ load_dotenv()
 def message_user(company, stock_delta):
     """  """
 
-    news_stories = news.news_top_headlines(company)
+    news_stories = news.news_top_headlines(company, num_stories=3)
     for news_story in news_stories[:1]:
         message = generate_stock_message(company, stock_delta, news_story)
         send_stock_message_sms(message)
