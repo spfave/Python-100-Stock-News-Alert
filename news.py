@@ -24,4 +24,4 @@ def news_top_headlines(company, num_stories):
 
 # Main
 if __name__ == "__main__":
-    print(news_top_headlines("TSLA"))
+    print(news_top_headlines("Tesla Inc", 3))
