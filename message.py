@@ -6,22 +6,16 @@ from twilio.rest import Client
 load_dotenv()
 
 
-# STEP 3: Use https://www.twilio.com
-# Send a separate message with the percentage change and each article's title and description to your phone number.
-
-
 # Functions
-# todo: function to execute if stock percent change exceeds threshold
 def message_user(company, stock_delta):
     """  """
 
     news_stories = news.news_top_headlines(company)
     for news_story in news_stories[:1]:
         message = generate_stock_message(company, stock_delta, news_story)
-        send_stock_message_email(message)
+        send_stock_message_sms(message)
 
 
-# todo: function to send message with stock percent change and news article title & description
 def generate_stock_message(company, stock_delta, news_story):
     """ """
 
@@ -45,30 +39,18 @@ def send_stock_message_sms(message):
     print(message.status)
 
 
-def send_stock_message_email(message):
-    """  """
+# def send_stock_message_email(message):
+#     """  """
 
-    (bluf, body) = message.split("\n", 1)
-    email_msg = f"Subject: Stock Alert: {bluf}\n\n\{body}"
+#     (bluf, body) = message.split("\n", 1)
+#     email_msg = f"Subject: Stock Alert: {bluf}\n\n\{body}"
 
-    with smtplib.SMTP("smpt.gmail.com") as connection:
-        connection.starttls()
-        connection.login(user=os.getenv("my_email"),
-                         password=os.getenv("email_password"))
-        connection.sendmail(
-            from_addr=os.getenv("my_email"),
-            to_addrs=os.os.getenv("to_email"),
-            msg=email_msg
-        )
-
-
-# Optional: Format the SMS message like this:
-"""
-TSLA: 🔺2%
-Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
-Brief: We at Insider Monkey have gone over 821 13F filings that hedge funds and prominent investors are required to file by the SEC The 13F filings show the funds' and investors' portfolio positions as of March 31st, near the height of the coronavirus market crash.
-or
-"TSLA: 🔻5%
-Headline: Were Hedge Funds Right About Piling Into Tesla Inc. (TSLA)?. 
-Brief: We at Insider Monkey have gone over 821 13F filings that hedge funds and prominent investors are required to file by the SEC The 13F filings show the funds' and investors' portfolio positions as of March 31st, near the height of the coronavirus market crash.
-"""
+#     with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+#         connection.starttls()
+#         connection.login(user=os.getenv("my_email"),
+#                          password=os.getenv("email_password"))
+#         connection.sendmail(
+#             from_addr=os.getenv("my_email"),
+#             to_addrs=os.getenv("to_email"),
+#             msg=email_msg
+#         )
