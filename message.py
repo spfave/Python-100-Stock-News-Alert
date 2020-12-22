@@ -1,7 +1,5 @@
 import os
 import smtplib
-
-from requests.models import encode_multipart_formdata
 import news
 from dotenv import load_dotenv
 from twilio.rest import Client
@@ -13,7 +11,7 @@ def message_user(company, stock_delta):
     """  """
 
     news_stories = news.news_top_headlines(company, num_stories=3)
-    for news_story in news_stories[:1]:
+    for news_story in news_stories:
         message = generate_stock_message(company, stock_delta, news_story)
         send_stock_message_email(message)
 
