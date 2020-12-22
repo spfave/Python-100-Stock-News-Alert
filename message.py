@@ -1,5 +1,7 @@
 import os
 import smtplib
+
+from requests.models import encode_multipart_formdata
 import news
 from dotenv import load_dotenv
 from twilio.rest import Client
@@ -13,7 +15,7 @@ def message_user(company, stock_delta):
     news_stories = news.news_top_headlines(company, num_stories=3)
     for news_story in news_stories[:1]:
         message = generate_stock_message(company, stock_delta, news_story)
-        send_stock_message_sms(message)
+        send_stock_message_email(message)
 
 
 def generate_stock_message(company, stock_delta, news_story):
@@ -39,18 +41,18 @@ def send_stock_message_sms(message):
     print(message.status)
 
 
-# def send_stock_message_email(message):
-#     """  """
+def send_stock_message_email(message):
+    """  """
 
-#     (bluf, body) = message.split("\n", 1)
-#     email_msg = f"Subject: Stock Alert: {bluf}\n\n\{body}"
+    (bluf, body) = message.split("\n", 1)
+    email_msg = f"Subject: Stock Alert: {bluf}\n\n{body}".encode("utf-8")
 
-#     with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
-#         connection.starttls()
-#         connection.login(user=os.getenv("my_email"),
-#                          password=os.getenv("email_password"))
-#         connection.sendmail(
-#             from_addr=os.getenv("my_email"),
-#             to_addrs=os.getenv("to_email"),
-#             msg=email_msg
-#         )
+    with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
+        connection.starttls()
+        connection.login(user=os.getenv("my_email"),
+                         password=os.getenv("email_password"))
+        connection.sendmail(
+            from_addr=os.getenv("my_email"),
+            to_addrs=os.getenv("to_email"),
+            msg=email_msg,
+        )
