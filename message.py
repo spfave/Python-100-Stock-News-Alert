@@ -1,4 +1,5 @@
 import os
+import smtplib
 import news
 from dotenv import load_dotenv
 from twilio.rest import Client
@@ -17,7 +18,7 @@ def message_user(company, stock_delta):
     news_stories = news.news_top_headlines(company)
     for news_story in news_stories[:1]:
         message = generate_stock_message(company, stock_delta, news_story)
-        send_stock_message_sms(message)
+        send_stock_message_email(message)
 
 
 # todo: function to send message with stock percent change and news article title & description
@@ -42,6 +43,23 @@ def send_stock_message_sms(message):
         to=os.getenv("phone_number"))
 
     print(message.status)
+
+
+def send_stock_message_email(message):
+    """  """
+
+    (bluf, body) = message.split("\n", 1)
+    email_msg = f"Subject: Stock Alert: {bluf}\n\n\{body}"
+
+    with smtplib.SMTP("smpt.gmail.com") as connection:
+        connection.starttls()
+        connection.login(user=os.getenv("my_email"),
+                         password=os.getenv("email_password"))
+        connection.sendmail(
+            from_addr=os.getenv("my_email"),
+            to_addrs=os.os.getenv("to_email"),
+            msg=email_msg
+        )
 
 
 # Optional: Format the SMS message like this:
